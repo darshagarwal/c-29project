@@ -11,7 +11,7 @@ function setup() {
   engine = Engine.create();
     world = engine.world();
 
-  block1 = new block1(330,235,30,40);
+  block1 = new Block1(330,235,30,40);
 }
 
 function draw() {
