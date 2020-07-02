@@ -9,14 +9,15 @@ var block1,black2,blaock3,blaock4,block5,block6,block7,block8,block9;
 function setup() {
   createCanvas(800,400);
   engine = Engine.create();
-    world = engine.world();
+    world = engine.world;
 
-  block1 = new Block1(330,235,30,40);
+  block1 = new Block(330,235,30,40);
 }
 
 function draw() {
+  background("black"); 
   Engine.update(engine);
-  background("black");  
+   
   block1.display();
   drawSprites();
 }
