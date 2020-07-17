@@ -9,7 +9,7 @@ class Player{
         this.width = width;
         this.height = height;
         this.image = loadImage("hexagon (1).png");
-        World.add(this.body,world);
+        World.add(world,this.body);
     }
 
     display(){

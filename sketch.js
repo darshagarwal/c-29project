@@ -64,9 +64,9 @@ function setup() {
 
   block22 = new Block(900,110,30,40);
 
-  player = new Player(200,50);
+  //player = new Player(200,50);
 
-  chain = new Chain(player.body,{x:200, y:50});
+  //chain = new Chain(player.body,{x:200, y:100});
 
 }
 
@@ -74,12 +74,12 @@ function draw() {
   background("black");
   Engine.update(engine);
 
-  player.display();
-
    fill(rgb(135, 205, 236));
-
+   console.log("start");
   block1.display();
+  console.log(block1);
   block2.display();
+  console.log("2");
   block3.display();
   block4.display();
   block5.display();
@@ -115,20 +115,24 @@ function draw() {
 
   fill("#642C2C");
   ground1.display();
-  drawSprites();
   ground2.display();
+  
+    drawSprites();
 
-  fill("lightBlue");
-  rope.display();
+   // player.display();
+
+ // fill("lightBlue");
+ // chain.display();
+  
 
 }
 
 
-function mouseDragged(){
+/*function mouseDragged(){
   Matter.Body.setPosition(player.body, {x: mouseX , y: mouseY});
 }
 
 
 function mouseReleased(){
-  rope.fly();
-}
+  chain.fly();
+}*/
