@@ -64,9 +64,9 @@ function setup() {
 
   block22 = new Block(900,110,30,40);
 
-  //player = new Player(200,50);
+  player = new Player(100,50,30,30);
 
-  //chain = new Chain(player.body,{x:200, y:100});
+  rope = new Chain(player.body,{x:200, y:100});
 
 }
 
@@ -117,12 +117,12 @@ function draw() {
   ground1.display();
   ground2.display();
   
-    drawSprites();
+   // drawSprites();
 
-   // player.display();
+    player.display();
 
- // fill("lightBlue");
- // chain.display();
+  //fill("lightBlue");
+  rope.display();
   
 
 }
