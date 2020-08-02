@@ -4,7 +4,7 @@ class Chain{
             bodyA: bodyA,
             pointB: pointB,
             stiffness: 0.04,
-            length: 10
+            length: 1,
         }
         this.pointB = pointB
         this.sling = Constraint.create(options);
@@ -22,7 +22,7 @@ class Chain{
             push();
             
             stroke(48,22,8);
-            if(pointA.x < 220) {
+           /* if(pointA.x < 220) {
                 strokeWeight(7);
                 line(pointA.x - 20, pointA.y, pointB.x -10, pointB.y);
                 line(pointA.x - 20, pointA.y, pointB.x + 30, pointB.y - 3);
@@ -31,7 +31,10 @@ class Chain{
                 strokeWeight(3);
                 line(pointA.x + 25, pointA.y, pointB.x -10, pointB.y);
                 line(pointA.x + 25, pointA.y, pointB.x + 30, pointB.y - 3);
-            }
+            }*/
+
+            strokeWeight(3);
+            line(pointA.x, pointA.y, pointB.x, pointB.y);
            
             
             pop();

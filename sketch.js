@@ -19,6 +19,14 @@ var ground2;
 var rope;
 var player;
 
+var ball;
+var img;
+
+function preload(){
+  img = loadImage("hexagon (1).png");
+
+}
+
 function setup() {
   createCanvas(1500,600);
   engine = Engine.create();
@@ -64,9 +72,12 @@ function setup() {
 
   block22 = new Block(900,110,30,40);
 
-  player = new Player(100,50,30,30);
+  //player = new Player(50,200,30,30);
 
-  rope = new Chain(player.body,{x:200, y:100});
+  ball = Bodies.circle(50,200,20);
+  World.add(world,ball);
+
+  rope = new Chain(this.ball,{x:100, y:200});
 
 }
 
@@ -77,9 +88,9 @@ function draw() {
    fill(rgb(135, 205, 236));
    console.log("start");
   block1.display();
-  console.log(block1);
+ // console.log(block1);
   block2.display();
-  console.log("2");
+  //console.log("2");
   block3.display();
   block4.display();
   block5.display();
@@ -119,8 +130,9 @@ function draw() {
   
    // drawSprites();
 
-    player.display();
-
+   // player.display();
+   imageMode(CENTER);
+   image(img,ball.position.x,ball.position.y,40,40);
   //fill("lightBlue");
   rope.display();
   
@@ -128,11 +140,11 @@ function draw() {
 }
 
 
-/*function mouseDragged(){
-  Matter.Body.setPosition(player.body, {x: mouseX , y: mouseY});
+function mouseDragged(){
+  Matter.Body.setPosition(this.ball, {x: mouseX , y: mouseY});
 }
 
 
 function mouseReleased(){
-  chain.fly();
-}*/
+  rope.fly();
+}
