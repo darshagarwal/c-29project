@@ -1,150 +1,160 @@
-const Engine = Matter.Engine;
-const World= Matter.World;
-const Bodies = Matter.Bodies;
-const Constraint = Matter.Constraint;
-
-var engine, world;
-var block1,block2,block3,block4,block5;
-var block6,block7,block8,block9;
-var block10,block11,block12;
-var block13,block14;
-var player;
-var ground1;
-
-var block14,block15,block16,block17,block18;
-var block19,block20,block21;
-var block22;
-var ground2;
-
-var rope;
-var player;
-
+var paddle;
+var bubble = [];
 var ball;
-var img;
-
+var edges;
+var backgroundImg;
+var ballimg1,ballimg2,ballimg3,ballimg4,ballimg5,ballimg6,ballimg7,ballimg8,ballimg9,ballimg10;
+var score = 0;
+var ballArr;
+var ghost,ghostLeftImg,ghostRightImg,deadGhost;
+var megaBallImg;
 function preload(){
-  img = loadImage("hexagon (1).png");
+	backgroundImg = loadImage("Images/backgroud.jpg");
+	ballimg1 = loadImage("Images/beigeBall.png");
+	ballimg2 = loadImage("Images/blackBall.png");
+	ballimg3 = loadImage("Images/blackishBrownBall.png");
+	ballimg4 = loadImage("Images/chocolateBrownBall.png");
+	ballimg5 = loadImage("Images/darkBlueBall.png");
+	ballimg6 = loadImage("Images/darkBrownBall.png");
+	ballimg7 = loadImage("Images/gerrnBall.png");
+	ballimg8 = loadImage("Images/greyBall.png");
+	ballimg9 = loadImage("Images/lightBrownBall.png");
+	ballimg10 = loadImage("Images/peachBall.png");
 
+	ghostLeftImg = loadImage("Images/ghost left.png");
+	ghostRightImg = loadImage("Images/ghost right.png");
+	megaBallImg = loadImage("Images/mega ball 1.png");
+	deadGhost = loadImage("Images/dead ghost.png");
 }
 
 function setup() {
-  createCanvas(1500,600);
-  engine = Engine.create();
-    world = engine.world;
 
-// Bottom layer :-
-  block1 = new Block(600,260,30,40);
-  block2 = new Block(570,260,30,40);
-  block3 = new Block(540,260,30,40);
-  block4 = new Block(630,260,30,40);
-  block5 = new Block(660,260,30,40);
+	ballArr = [ballimg1,ballimg2,ballimg3,ballimg4,ballimg5,ballimg6,ballimg7,ballimg8,ballimg9,ballimg10];
+	createCanvas(1000, 1050);
+	//Create object for paddle.
+	paddle = new Paddle(400,900,150,30);
+	paddle.display();
 
+	//create object for ball.
+	ball = createSprite(450,900,30,30);
+	ball.addImage(ballArr[Math.round(random(0,9))]);
+	ball.scale = 0.7;
 
-  // forth layer :-
-  block6 = new Block(585,220,30,40);
-  block7 = new Block(555,220,30,40);
-  block8 = new Block(615,220,30,40);
-  block9 = new Block(645,220,30,40);
+	//bubble = new Bubble(400,200,80);
+	for(var k = 0; k<=width; k = k+65){
+        var bubbleObj = new Bubble(k,height-1800/2,70,20);
+        bubbleObj.bubbleImg();
+		bubble.push(bubbleObj);
+	}
+	
+	for(var k = 0; k<=width; k = k+65){
+        var bubbleObj = new Bubble(k,height-1600/2,70,20);
+        bubbleObj.bubbleImg();
+		bubble.push(bubbleObj);
+	}
 
+	for(var k = 0; k<=width; k = k+65){
+        var bubbleObj = new Bubble(k,height-1400/2,70,20);
+        bubbleObj.bubbleImg();
+		bubble.push(bubbleObj);
+	}
 
-  // third layer :-
-  bolck10 = new Block(600,170,30,40);
-  block11 = new Block(570,180,30,40);
-  block12 = new Block(630,180,30,40);
+	for(var k = 0; k<=width; k = k+65){
+        var bubbleObj = new Bubble(k,height-1200/2,70,20);
+        bubbleObj.bubbleImg();
+		bubble.push(bubbleObj);
+	}
 
-  // Second layer :-
-  block13 = new Block(600,140,30,40);
+	edges = createEdgeSprites();
 
-// ground for the above pyrimid/pyrimid1 :-
-  ground1 = new Ground(600,285,200,10);
-  ground2 = new Ground(900,195,200,10);
+	for(var temp in bubble){
+		var d = int(dist(ball.x,ball.y,bubble[temp].x,bubble[temp].y));
+		if(d <10){
+		//console.log(d);
+		}
+	}	
 
-  // Second Pyrimid :-
-  block14 = new Block(900,170,30,40);
-  block15 = new Block(930,170,30,40);
-  block16 = new Block(870,170,30,40);
-  block17 = new Block(840,170,30,40);
-  block18 = new Block(960,170,30,40);
-
-  block19 = new Block(900,140,30,40);
-  block20 = new Block(930,140,30,40);
-  block21 = new Block(870,140,30,40);
-
-  block22 = new Block(900,110,30,40);
-
-  //player = new Player(50,200,30,30);
-
-  ball = Bodies.circle(50,200,20);
-  World.add(world,ball);
-
-  rope = new Chain(this.ball,{x:100, y:200});
-
+	// to create a ghost
+	ghost = createSprite(1100,575,50,100);
+	ghost.addImage(ghostLeftImg);
 }
+
 
 function draw() {
-  background("black");
-  Engine.update(engine);
+  background(backgroundImg);
+	fill("blue");
 
-   fill(rgb(135, 205, 236));
-   console.log("start");
-  block1.display();
- // console.log(block1);
-  block2.display();
-  //console.log("2");
-  block3.display();
-  block4.display();
-  block5.display();
+	if(keyDown("space") && ball.velocityX === 0 && ball.velocityY === 0){
+		ball.velocityX = 1;
+		ball.velocityY = -8;
+	}
 
-  fill("lightPink");
-  block6.display();
-  block7.display();
-  block8.display();
-  block9.display();
+	ball.bounceOff(edges[0]);
+	ball.bounceOff(edges[1]);
+	ball.bounceOff(edges[2]);
+	ball.bounceOff(paddle.paddle);
+    
+    for(var temp in bubble){
+		if(ball.bounceOff(bubble[temp].bubble)){
+			console.log("hi");
+			score += 100;
+		}
+	}
 
-  fill("lightGreen");
-  bolck10.display();
-  block11.display();
-  block12.display();
+	if(ball.bounceOff(paddle.paddle)){
+		ball.changeImage(ballArr[Math.round(random(0,9))]);
+		ball.scale = 0.7;
+	}
 
-  fill(rgb(47, 48, 48));
-  block13.display();
+	if(keyDown("right")){
+		this.paddle.paddle.x += 10;
+	}
 
-  fill(rgb(135, 205, 236));
-  block14.display();
-  block15.display();
-  block16.display();
-  block17.display();
-  block18.display();
+	if(keyDown("left")){
+		this.paddle.paddle.x -= 10;
+	}
 
-  fill("lightGreen");
-  block19.display();
-  block20.display();
-  block21.display();
+	if(score >= 100){
+	if(keyDown("m")){
+		ball.addImage(megaBallImg);
+		ball.scale = 0.075;
 
-  fill("lightPink");
-  block22.display();
+	}
+   }else if(score !== 100){
+	   if(keyDown("m")){
+		   textSize(30)
+		   text("Note:" + "If you want to use 'Mega Ball' you will loose 50 points",25, 1000)
+	   }
+   }
 
-  fill("#642C2C");
-  ground1.display();
-  ground2.display();
-  
-   // drawSprites();
+   if(ball.y >= 1050){
+	   textSize(30);
+	   text("GAME OVER!!",350,700)
+   }
 
-   // player.display();
-   imageMode(CENTER);
-   image(img,ball.position.x,ball.position.y,40,40);
-  //fill("lightBlue");
-  rope.display();
-  
-
-}
-
-
-function mouseDragged(){
-  Matter.Body.setPosition(this.ball, {x: mouseX , y: mouseY});
-}
+   if(score === 100){
+	ghost.velocityX = -3;
+   }
+   
+   
+   if(ghost.x === 100){
+	ghost.addImage(ghostRightImg);
+	ghost.velocityX = +20;
+	console.log("velocity");
+   }
 
 
-function mouseReleased(){
-  rope.fly();
+ if(ball.bounceOff(ghost)){
+	ghost.addImage(deadGhost);
+	ball.addImage(ballArr[Math.round(random(0,9))]);
+	score += 100;
+	console.log(ballArr[Math.round(random(0,9))]);
+ }
+
+	textSize(40);
+	text("Score" + score,50   ,50);
+	textSize(30);
+	text("NOTE:" + "Press 'm' key when the ghost arrive",25,950);
+
+	drawSprites();
 }
